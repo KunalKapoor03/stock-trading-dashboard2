@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+const API = import.meta.env.VITE_API_URL
 
 const Positions = () => {
   const [allPositions, setAllPositions] = useState([])
 
   useEffect(() => {
     axios
-      .get('http://localhost:3002/allPositions')
+      .get(`${API}/allPositions`)
       .then((res) => {
         setAllPositions(res.data || [])
       })

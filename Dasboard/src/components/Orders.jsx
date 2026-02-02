@@ -16,11 +16,11 @@ const Orders = () => {
       })
   }, [])
 
-  // 🔹 Empty state (same feel as Zerodha)
+  // ✅ Empty state
   if (allOrders.length === 0) {
     return (
       <div className="h-[90vh] w-full flex items-center justify-center">
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center">
           <p className="mb-6 text-gray-400 text-base font-light">
             You haven&apos;t placed any orders yet
           </p>
@@ -39,12 +39,10 @@ const Orders = () => {
 
   return (
     <div className="max-w-[1100px]">
-      {/* Title */}
       <h3 className="text-base font-normal text-gray-700 mb-3">
         Orders ({allOrders.length})
       </h3>
 
-      {/* Table */}
       <div className="border border-gray-200">
         <table className="w-full text-[13px]">
           <thead>
@@ -74,10 +72,14 @@ const Orders = () => {
                   key={index}
                   className="border-b border-gray-100 hover:bg-gray-50"
                 >
+                  {/* ✅ TIME FIX */}
                   <td className="px-3 py-2 text-left text-gray-600">
                     {order.createdAt
-                      ? new Date(order.createdAt).toLocaleTimeString()
-                      : '--'}
+                      ? new Date(order.createdAt).toLocaleTimeString('en-IN', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })
+                      : 'Just now'}
                   </td>
 
                   <td className="px-3 py-2 text-left text-gray-700">
@@ -91,7 +93,7 @@ const Orders = () => {
                   <td className="px-3 py-2 text-right">{order.qty}</td>
 
                   <td className="px-3 py-2 text-right">
-                    {(Number(order.price) || 0).toFixed(2)}
+                    {Number(order.price).toFixed(2)}
                   </td>
 
                   <td className="px-3 py-2 text-right text-gray-500">

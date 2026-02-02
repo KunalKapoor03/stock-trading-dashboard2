@@ -1,14 +1,21 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { VerticalGraph } from './VerticalGraph'
+const API = import.meta.env.VITE_API_URL
 
 const Holdings = () => {
   const [allHoldings, setAllHoldings] = useState([])
+  const [error, setError] = useState(null)
 
   useEffect(() => {
-    axios.get('http://localhost:3002/allHoldings').then((res) => {
-      setAllHoldings(res.data)
-    })
+    axios
+      .get(`${API}/allHoldings`)
+      .then((res) => {
+        setAllHoldings(res.data)
+      })
+      .catch(() => {
+        setError('Failed to load holdings')
+      })
   }, [])
 
   const labels = allHoldings.map((stock) => stock.name)
@@ -30,6 +37,8 @@ const Holdings = () => {
       <h3 className="text-base font-normal text-gray-700 mb-3">
         Holdings ({allHoldings.length})
       </h3>
+
+      {error && <p className="text-sm text-red-500 mb-3">{error}</p>}
 
       {/* Table */}
       <div className="border border-gray-200">

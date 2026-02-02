@@ -206,6 +206,10 @@ connectDB(URL);
 //   res.send("Done!");
 // });
 
+app.get("/", (req, res) => {
+  res.send("Zerodha Backend API is running");
+});
+
 app.get("/allHoldings", async (req, res) => {
   let allHoldings = await HoldingsModel.find({});
   res.json(allHoldings);
@@ -214,6 +218,15 @@ app.get("/allHoldings", async (req, res) => {
 app.get("/allPositions", async (req, res) => {
   let allPositions = await PositionsModel.find({});
   res.json(allPositions);
+});
+
+app.get("/allOrders", async (req, res) => {
+  try {
+    const allOrders = await OrdersModel.find({}).sort({ createdAt: -1 });
+    res.json(allOrders);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch orders" });
+  }
 });
 
 app.post("/newOrder", async (req, res) => {
