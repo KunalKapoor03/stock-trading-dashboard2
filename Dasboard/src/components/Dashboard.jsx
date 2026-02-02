@@ -11,25 +11,24 @@ import { GeneralContextProvider } from './GeneralContext'
 
 const Dashboard = () => {
   return (
-    <div className="flex h-screen bg-gray-50">
-      {/* Left Sidebar / Watchlist */}
+    <div className="w-full h-[90vh] flex">
       <GeneralContextProvider>
-        <div className="w-80 border-r bg-white overflow-y-auto">
+        {/* Watchlist */}
+        <div className="w-[32%] border-r border-gray-200">
           <WatchList />
         </div>
-      </GeneralContextProvider>
 
-      {/* Main Content */}
-      <div className="flex-1 overflow-y-auto">
-        <Routes>
-          <Route path="/" element={<Summary />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/holdings" element={<Holdings />} />
-          <Route path="/positions" element={<Positions />} />
-          <Route path="/funds" element={<Funds />} />
-          <Route path="/apps" element={<Apps />} />
-        </Routes>
-      </div>
+        {/* Main content */}
+        <div className="w-[68%] overflow-y-auto px-6 py-6">
+          <Routes>
+            <Route path="/" element={<Summary />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/holdings" element={<Holdings />} />
+            <Route path="/positions" element={<Positions />} />
+            <Route path="/funds" element={<Funds />} />
+          </Routes>
+        </div>
+      </GeneralContextProvider>
     </div>
   )
 }
